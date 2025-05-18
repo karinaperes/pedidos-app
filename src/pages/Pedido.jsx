@@ -81,7 +81,7 @@ export default function Pedido() {
 
       {user?.uid === adminUID && (
         <div onClick={handleImagemClick} style={{ cursor: "pointer", marginBottom: "20px" }}>
-          <img src="/vite.svg" width="32" alt="Configurar Cardápio" />
+          <img src="/cardapio.png" width="32" alt="Configurar Cardápio" />
         </div>
       )}
 

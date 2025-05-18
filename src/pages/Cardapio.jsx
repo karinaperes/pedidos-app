@@ -52,9 +52,10 @@ export default function Cardapio() {
 
   return (
     <div style={{ maxWidth: 500, margin: "auto" }}>
-      <h2>Cadastro do Cardápio</h2>
+      <h2 className="center">Cadastro do Cardápio</h2>
 
       <input
+        className="marg10"
         type="text"
         value={input}
         onChange={(e) => setInput(e.target.value)}
