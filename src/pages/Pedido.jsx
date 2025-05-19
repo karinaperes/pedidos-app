@@ -24,16 +24,17 @@ export default function Pedido() {
 
   useEffect(() => {
     async function carregarOpcoes() {
-      const querySnapshot = await getDocs(collection(db, "cardapio"));
-      const lista = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-      setOpcoes(lista);
+      try {
+        const querySnapshot = await getDocs(collection(db, "cardapio"));
+        const lista = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+        setOpcoes(lista);
+      } catch (error) {
+        console.error("Erro ao carregar cardápio:", error);
+      }
     }
 
-    if (user !== null) {
-      // Só carrega se o usuário estiver logado
-      carregarOpcoes();
-    }
-  }, [user]); // Adicionei user como dependência
+    carregarOpcoes(); // Carrega opções independente do usuário
+  }, []); // Removi a dependência do user
 
   const toggleSelecionada = (id) => {
     setSelecionadas((prev) => (prev.includes(id) ? prev.filter((m) => m !== id) : [...prev, id]));
@@ -50,6 +51,11 @@ export default function Pedido() {
   };
 
   const enviarPedido = () => {
+    if (!user) {
+      alert("Você precisa estar logado para enviar um pedido!");
+      return;
+    }
+
     if (selecionadas.length === 0) {
       alert("Selecione pelo menos uma opção!");
       return;
@@ -89,38 +95,34 @@ export default function Pedido() {
         </div>
       )}
 
-      {/* Mostra a lista para qualquer usuário logado */}
-      {user && (
-        <>
-          <ul className="opcoes-list">
-            {opcoes.map((m) => (
-              <li key={m.id} className="opcao-item">
-                <div className="opcao-content">
-                  <span className="opcao-nome">{m.nome}</span>
-                </div>
-                <div className="opcao-controles">
-                  <input
-                    type="checkbox"
-                    checked={selecionadas.includes(m.id)}
-                    onChange={() => toggleSelecionada(m.id)}
-                  />
-                  {selecionadas.includes(m.id) && (
-                    <input
-                      type="number"
-                      min="1"
-                      value={quantidades[m.id] || 1}
-                      onChange={(e) => atualizarQuantidade(m.id, e.target.value)}
-                      className="quantidade-input"
-                    />
-                  )}
-                </div>
-              </li>
-            ))}
-          </ul>
+      {/* Lista visível para todos (já que o componente só renderiza se user !== null) */}
+      <ul className="opcoes-list">
+        {opcoes.map((m) => (
+          <li key={m.id} className="opcao-item">
+            <div className="opcao-content">
+              <span className="opcao-nome">{m.nome}</span>
+            </div>
+            <div className="opcao-controles">
+              <input
+                type="checkbox"
+                checked={selecionadas.includes(m.id)}
+                onChange={() => toggleSelecionada(m.id)}
+              />
+              {selecionadas.includes(m.id) && (
+                <input
+                  type="number"
+                  min="1"
+                  value={quantidades[m.id] || 1}
+                  onChange={(e) => atualizarQuantidade(m.id, e.target.value)}
+                  className="quantidade-input"
+                />
+              )}
+            </div>
+          </li>
+        ))}
+      </ul>
 
-          <button onClick={enviarPedido}>Enviar Pedido via WhatsApp</button>
-        </>
-      )}
+      <button onClick={enviarPedido}>Enviar Pedido via WhatsApp</button>
     </div>
   );
 }
