@@ -80,14 +80,42 @@ li {
   margin-top: 10px;
 }
 
-
-
-
-
 .opcoes-list {
-  width: 100%;
-  padding: 0;
   list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.opcao-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.opcao-content {
+  flex: 1;
+  min-width: 0; /* Permite que o texto quebre */
+  padding-right: 15px;
+}
+
+.opcao-nome {
+  word-wrap: break-word;
+  white-space: normal;
+  display: inline-block;
+  max-width: 100%;
+}
+
+.opcao-controles {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0; /* Impede que os controles encolham */
+}
+
+.quantidade-input {
+  width: 50px;
 }
 
 .opcoes-list li {
@@ -120,4 +148,46 @@ li {
   overflow: hidden;
   text-overflow: ellipsis;
   flex-grow: 1;
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0 10px;
+  }
+
+  .opcao-item {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 15px 0;
+  }
+
+  .opcao-texto {
+    width: 100%;
+    padding-right: 0;
+    margin-bottom: 8px;
+  }
+
+  .opcao-controles {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .quantidade-input {
+    width: 60px;
+  }
+
+  .enviar-btn {
+    padding: 15px;
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .nome-item {
+    font-size: 0.9rem;
+  }
+
+  .quantidade-input {
+    width: 50px;
+  }
 }
