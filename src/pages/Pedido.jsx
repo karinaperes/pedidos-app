@@ -3,6 +3,7 @@ import { collection, getDocs } from "firebase/firestore";
 import { auth, db } from "../services/firebase";
 import { useNavigate, Navigate } from "react-router-dom";
 import { onAuthStateChanged, getAuth } from "firebase/auth";
+import "../../src/App.css";
 
 export default function Pedido() {
   const [opcoes, setOpcoes] = useState([]);
@@ -76,7 +77,7 @@ export default function Pedido() {
   if (user === null) return <Navigate to="/login" />;
 
   return (
-    <div style={{ maxWidth: 500, margin: "auto" }}>
+    <div className="container" style={{ maxWidth: 500, margin: "auto" }}>
       <h2>Escolha suas opções da semana</h2>
 
       {user?.uid === adminUID && (
@@ -85,16 +86,16 @@ export default function Pedido() {
         </div>
       )}
 
-      <ul>
+      <ul className="opcoes-list">
         {opcoes.map((m) => (
           <li key={m.id}>
             <label>
+              <span>{m.nome}</span>
               <input
                 type="checkbox"
                 checked={selecionadas.includes(m.id)}
                 onChange={() => toggleSelecionada(m.id)}
               />
-              {m.nome}
             </label>
           </li>
         ))}

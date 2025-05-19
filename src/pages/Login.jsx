@@ -2,6 +2,7 @@ import { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../services/firebase";
 import { useNavigate, Link } from "react-router-dom";
+import "../../src/App.css";
 
 export default function Login() {
   const [form, setForm] = useState({ email: "", senha: "" });
@@ -25,16 +26,16 @@ export default function Login() {
   };
 
   return (
-    <div style={{ maxWidth: 400, margin: "auto" }}>
-      <h2>Login</h2>
-      <form onSubmit={handleLogin}>
+    <div className="container">
+      <h2 className="login-title">Login</h2>
+      <form className="login-form" onSubmit={handleLogin}>
         <input
           type="email"
           name="email"
           placeholder="Email"
           value={form.email}
           onChange={handleChange}
-          required
+          required          
         />
         <input
           type="password"
@@ -42,12 +43,18 @@ export default function Login() {
           placeholder="Senha"
           value={form.senha}
           onChange={handleChange}
-          required
+          required          
         />
-        <button type="submit">Entrar</button>
-        <Link to="/cadastro">Cadastre-se</Link>
+        <button type="submit" className="login-button">
+          Entrar
+        </button>
       </form>
-      {erro && <p style={{ color: "red" }}>{erro}</p>}
+      <div className="signup-link-container">
+        <Link to="/cadastro" className="signup-link">
+          Cadastre-se
+        </Link>
+      </div>
+      {erro && <p className="error-message">{erro}</p>}
     </div>
   );
 }
