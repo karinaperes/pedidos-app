@@ -2,6 +2,7 @@ import { useState } from "react";
 import { collection, addDoc, deleteDoc, getDocs, doc } from "firebase/firestore";
 import { db } from "../services/firebase";
 import { useNavigate } from "react-router-dom";
+import "../../src/App.css"
 
 export default function Cardapio() {
   const [input, setInput] = useState("");
@@ -51,8 +52,8 @@ export default function Cardapio() {
   };
 
   return (
-    <div style={{ maxWidth: 500, margin: "auto" }}>
-      <h2 className="center">Cadastro do Cardápio</h2>
+    <div className="container" style={{ maxWidth: 500, margin: "auto" }}>
+      <h2>Cadastro do Cardápio</h2>
 
       <input
         className="marg10"

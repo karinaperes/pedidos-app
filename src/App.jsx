@@ -1,5 +1,6 @@
 import React, { Suspense, lazy } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import "../src/App.css"
 
 // Lazy load das páginas
 const Login = lazy(() => import("./pages/Login"));
