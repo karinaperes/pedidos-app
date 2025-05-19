@@ -23,6 +23,30 @@ export default function Pedido() {
   }, []);
 
   useEffect(() => {
+    const verificarPermissoes = async () => {
+      try {
+        const auth = getAuth();
+        console.log("Usuário atual:", auth.currentUser?.uid);
+
+        const querySnapshot = await getDocs(collection(db, "cardapio"));
+        console.log("Documentos carregados:", querySnapshot.size);
+
+        if (querySnapshot.empty) {
+          console.warn("A coleção 'cardapio' está vazia");
+        }
+      } catch (error) {
+        console.error("Erro detalhado:", {
+          code: error.code,
+          message: error.message,
+          stack: error.stack,
+        });
+      }
+    };
+
+    if (user) verificarPermissoes();
+  }, [user]);
+
+  useEffect(() => {
     async function carregarOpcoes() {
       try {
         const querySnapshot = await getDocs(collection(db, "cardapio"));
