@@ -62,15 +62,19 @@ export default function Pedido() {
 
   const toggleSelecionada = (id) => {
     setSelecionadas((prev) => (prev.includes(id) ? prev.filter((m) => m !== id) : [...prev, id]));
+
+    // Só define quantidade 1 se for um item novo
     if (!selecionadas.includes(id)) {
       setQuantidades((prev) => ({ ...prev, [id]: 1 }));
     }
   };
 
   const atualizarQuantidade = (id, valor) => {
+    const numValue = Number(valor);
+
     setQuantidades((prev) => ({
       ...prev,
-      [id]: Math.max(1, parseInt(valor) || 1),
+      [id]: numValue > 0 ? numValue : 1, // Garante mínimo 1
     }));
   };
 
